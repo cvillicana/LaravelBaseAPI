@@ -3,6 +3,7 @@
 namespace App\Repositories\Article;
 
 use App\Contracts\Article\IArticleRepository;
+use App\Http\Requests\Article\ArticlePostRequest;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -20,13 +21,16 @@ class ArticleRepository implements IArticleRepository
         return $article;
     }
 
-    public function store(Request $request)
+    public function store(ArticlePostRequest $request)
     {
-    	$validatedData = $request->validate([
-        	'title' => 'required|max:255',
-        	'body' => 'required',
-    	]);
-
     	return Article::create($request->all());
+    }
+
+    public function update(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->update($request->all());
+
+        return $article;
     }
 }

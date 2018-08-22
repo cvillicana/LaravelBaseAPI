@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Article\IArticleRepository;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ArticleGet;
-use App\Http\Resources\Article as ArticleResource;
-use App\Http\Resources\ArticleCollection;
+use App\Http\Requests\Article\ArticlePostRequest;
+use App\Http\Resources\Article\Article as ArticleResource;
+use App\Http\Resources\Article\ArticleCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -34,8 +34,13 @@ class ArticleController extends Controller
         return new ArticleResource($this->article->find($id));
     }
 
-    public function store(Request $request)
+    public function store(ArticlePostRequest $request)
     {
         return new ArticleResource($this->article->store($request)); 
+    }
+
+    public function update(Request $request, $id)
+    {
+        return new ArticleResource($this->article->update($request, $id));
     }
 }

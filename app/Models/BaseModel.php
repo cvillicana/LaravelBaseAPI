@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as BaseModel;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class Model extends BaseModel
 {
@@ -22,7 +22,7 @@ class Model extends BaseModel
         parent::boot();
 
         static::creating(function ($instance) {
-            $instance->id = Uuid::uuid4();
+            $instance->id = Str::uuid();
         });
     }
 }
